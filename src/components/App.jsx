@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactsList from './ContactsList/ContactsList';
 import Filter from './Filter/Filter';
 import { isLoading, getError } from '../redux/selectors';
-
+import { Route, Routes } from 'react-router-dom';
 import { setFilter } from '../redux/filtersSlice';
 import { getContacts, addContact, deleteContact } from '../redux/operations';
+import { Layout } from './Layout';
+import { RestrictedRoute } from './RestrictedRoute';
+import { refreshUser } from 'redux/auth/operation';
+import { useAuth } from './hooks/useAuth';
 
 const App = () => {
   const dispatch = useDispatch();
