@@ -8,8 +8,7 @@ const Home = () => (
     </Helmet>
     <div className={css.box}>
       <h1 className={css.title}>
-        <p>Unlock the Power</p>
-        <p>of Your Phonebook ☎</p>
+        <p>Create Your Phonebook </p>
       </h1>
     </div>
   </HelmetProvider>

@@ -48,7 +48,6 @@ const App = () => {
           }
         />
       </Route>
-      <Route path="/contacts" element={<ContactsPage />} />
     </Routes>
   );
 };
