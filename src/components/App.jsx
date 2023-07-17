@@ -17,49 +17,34 @@ const App = () => {
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(getContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  const handleFormSubmit = (name, number) => {
-    let existContact = contacts.find(
-      contact => name.toLowerCase() === contact.name.toLowerCase()
-    );
-
-    if (existContact) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
-
-    const newContact = {
-      id: nanoid(),
-      name: name,
-      number: number,
-    };
-
-    dispatch(addContact(newContact));
-  };
-
-  const handleFilterChange = event => {
-    dispatch(setFilter(event.target.value));
-  };
-
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-  };
-
-  const filteredContacts = contacts.filter(contact =>
-    contact.name?.toLowerCase().includes(filter?.toLowerCase() || '')
-  );
-
-  return (
-    <>
-      <h1>Phonebook</h1>
-      <ContactForm onFormSubmit={handleFormSubmit} />
-      <Filter handleFilterChange={handleFilterChange} />{' '}
-      {loading && !error && <b>Request in progress...</b>}
-      <h2>Contacts</h2>
-      <ContactsList contacts={filteredContacts} onDelete={handleDelete} />
-    </>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<RegisterPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
           }
         />
       </Route>
