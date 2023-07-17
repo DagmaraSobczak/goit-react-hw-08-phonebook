@@ -1,24 +1,20 @@
 import React, { useEffect, lazy } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
-import ContactForm from './ContactForm/ContactForm';
-import ContactsList from './ContactsList/ContactsList';
-import Filter from './Filter/Filter';
-import { isLoading, getError } from '../redux/selectors';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { setFilter } from '../redux/filtersSlice';
-import { getContacts, addContact, deleteContact } from '../redux/operations';
 import { Layout } from './Layout';
 import { RestrictedRoute } from './RestrictedRoute';
 import { refreshUser } from 'redux/auth/operation';
 import { useAuth } from './hooks/useAuth';
+import { PrivateRoute } from './PrivateRoute';
+
+const HomePage = lazy(() => import('../pages/Home/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const ContactsPage = lazy(() => import('../pages/Contacts'));
 
 const App = () => {
   const dispatch = useDispatch();
-  const loading = useSelector(isLoading);
-  const error = useSelector(getError);
-  const contacts = useSelector(state => state.contacts.items);
-  const filter = useSelector(state => state.filter);
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
     dispatch(getContacts());
@@ -64,6 +60,11 @@ const App = () => {
       <h2>Contacts</h2>
       <ContactsList contacts={filteredContacts} onDelete={handleDelete} />
     </>
+          }
+        />
+      </Route>
+      <Route path="/contacts" element={<ContactsPage />} />
+    </Routes>
   );
 };
 
