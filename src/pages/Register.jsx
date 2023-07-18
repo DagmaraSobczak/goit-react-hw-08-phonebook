@@ -6,6 +6,7 @@ const Register = () => (
     <Helmet>
       <title>Registration - Phonebook</title>
     </Helmet>
+    <h1>Rejestracja</h1>
     <RegisterForm />
   </HelmetProvider>
 );

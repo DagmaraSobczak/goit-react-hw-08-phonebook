@@ -1,9 +1,19 @@
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
 .link {
-  display: inline-block;
   text-decoration: none;
-  padding: 12px;
+  color: #333;
+  font-size: 16px;
   font-weight: 700;
-  color: #2a363b;
+  padding: 8px;
+}
+
+.link:hover {
+  color: #555;
 }
 
 .link.active {
